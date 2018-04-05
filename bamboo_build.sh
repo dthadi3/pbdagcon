@@ -11,13 +11,9 @@ ln -sfn googletest-release-1.7.0 repos/gtest
 
 rm -rf deployment
 mkdir -p deployment
-#curl -s -L $NEXUS_URL/DAZZ_DB-SNAPSHOT.tgz|tar zx -C deployment
-BLASR=tarballs/blasr.tgz
-BLASR_LIBCPP=tarballs/blasr_libcpp.tgz
-PBBAM=tarballs/pbbam.tgz
-tar zxf $BLASR_LIBCPP -C deployment
-tar zxf $BLASR        -C deployment
-tar zxf $PBBAM        -C deployment
+/bin/ls -t tarballs/pbbam-*.tgz        | head -1 | xargs -r -n 1 cat | tar zxv --strip-components 3 -C deployment
+/bin/ls -t tarballs/blasr_libcpp-*.tgz | head -1 | xargs -r -n 1 cat | tar zxv --strip-components 3 -C deployment
+/bin/ls -t tarballs/blasr-*.tgz        | head -1 | xargs -r -n 1 cat | tar zxv --strip-components 2 -C deployment
 
 export PATH=$PWD/deployment/bin:$PATH
 export LD_LIBRARY_PATH=$PWD/deployment/lib:$LD_LIBRARY_PATH
@@ -61,6 +57,7 @@ LIBPBIHDF_INCLUDE=$PWD/../../deployment/include/hdf \
     GTEST_INCLUDE=$PWD/../gtest/include \
     ZLIB_LIBFLAGS="$(pkg-config --libs zlib)" \
 ./configure.py --build-dir=$PWD/build
+sed -i -e 's/-lpbihdf/-llibcpp/;s/-lblasr//;s/-lpbdata//' defines.mk
 make -C build
 cp -a build/src/cpp/pbdagcon ../../deployment/bin/
 cp -a build/src/cpp/dazcon   ../../deployment/bin/
