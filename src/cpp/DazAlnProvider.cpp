@@ -222,7 +222,7 @@ int TargetHit::aend() {
 // daligner structures.
 Target::Target(): needsFree_(false) { }
 
-Target::Target(HITS_DB& db, int tspace, int small) :
+Target::Target(DAZZ_DB& db, int tspace, int small) :
     db_(db),
     tspace_(tspace),
     small_(small),

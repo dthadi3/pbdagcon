@@ -94,7 +94,7 @@ std::ostream& operator<<(std::ostream& ostrm, TargetHit& hit);
 class Target {
 public:
     Target();
-    Target(HITS_DB& db, int tspace, int small);
+    Target(DAZZ_DB& db, int tspace, int small);
     ~Target();
 
     // Initializes this target based on the given record, possibly scoring as
@@ -119,7 +119,7 @@ public:
     std::vector<TargetHit> hits;
 
 private:
-    HITS_DB db_;
+    DAZZ_DB db_;
     char* abuffer_, *bbuffer_;
     Work_Data* work_;
     int tspace_, small_;
@@ -158,7 +158,7 @@ private:
     const ProgramOpts popts_;
 
     // Dazzler-related data
-    HITS_DB db_;
+    DAZZ_DB db_;
     int64 novl_, covl_;
     int tbytes_;
     FILE* input_;
