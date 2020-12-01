@@ -1,4 +1,7 @@
 language: cpp
+arch:
+  - AMD64
+  - ppc64le
 script: 
   - ./travis.sh
 compiler:
